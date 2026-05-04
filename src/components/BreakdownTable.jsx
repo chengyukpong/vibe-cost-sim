@@ -25,9 +25,13 @@ export default function BreakdownTable({ params, results }) {
     ['Users', params.users],
     ['Total Sessions / day', fmtK(results.dailySessions)],
     ['Total Sessions / mo', fmtK(results.totalSessionsMo)],
-    ['Total Requests / mo', fmtK(results.totalSessionsMo * params.reqPerUser)],
-    ['Total Credits / mo', fmtK(results.totalCredits)],
-    ['Credits (Billions)', results.creditsB.toFixed(1) + 'B'],
+    ['Total Requests / mo', fmtK(results.totalRequests)],
+    ...(params.isPerRequest
+      ? [['Requests / Plan', fmtK(params.reqPerPlan)]]
+      : [
+          ['Total Credits / mo', fmtK(results.totalCredits)],
+          ['Credits (Billions)', results.creditsB.toFixed(1) + 'B'],
+        ]),
     ['Plans Needed', results.plansNeeded],
     ['Working Machines (10h)', `${results.workingMachines}  (${fmtK(results.dailySessions)} / 10 × 1.3 / ${params.instances})`],
     ['Non-Working Machines (14h)', results.nonWorkingMachines],

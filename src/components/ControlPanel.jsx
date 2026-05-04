@@ -9,6 +9,8 @@ import {
 import SmartToyIcon from '@mui/icons-material/SmartToy'
 import CloudIcon from '@mui/icons-material/Cloud'
 import GroupIcon from '@mui/icons-material/Group'
+import RequestQuoteIcon from '@mui/icons-material/RequestQuote'
+import TokenIcon from '@mui/icons-material/Token'
 
 function ParamSlider({ label, value, min, max, step, format, onChange, tip }) {
   return (
@@ -167,6 +169,24 @@ export default function ControlPanel({ params, update, hrRate }) {
               Model Plan
             </Typography>
           </Box>
+          <Box display="flex" alignItems="center" gap={1.25} mb={2}>
+            <Switch
+              checked={params.isPerRequest}
+              onChange={(e) => update('isPerRequest', e.target.checked)}
+              color="primary"
+              size="small"
+            />
+            <Box display="flex" alignItems="center" gap={0.5}>
+              {params.isPerRequest ? (
+                <RequestQuoteIcon sx={{ fontSize: 18, color: 'primary.main' }} />
+              ) : (
+                <TokenIcon sx={{ fontSize: 18, color: 'primary.main' }} />
+              )}
+              <Typography variant="body2" fontWeight={500}>
+                {params.isPerRequest ? 'Per Request' : 'Per Credit'}
+              </Typography>
+            </Box>
+          </Box>
           <ParamSlider
             label="Plan Cost / mo"
             value={params.modelPlanCost}
@@ -176,24 +196,38 @@ export default function ControlPanel({ params, update, hrRate }) {
             format={(v) => `$${v}`}
             onChange={(v) => update('modelPlanCost', v)}
           />
-          <ParamSlider
-            label="Credits / Plan / mo"
-            value={params.modelCredits}
-            min={1}
-            max={100}
-            step={1}
-            format={(v) => `${v}B`}
-            onChange={(v) => update('modelCredits', v)}
-          />
-          <ParamSlider
-            label="Ave Credit/Request"
-            value={params.creditsPerReq}
-            min={0.1}
-            max={5}
-            step={0.1}
-            format={(v) => v >= 1 ? `${v}M` : `${(v * 1000).toFixed(0)}k`}
-            onChange={(v) => update('creditsPerReq', v)}
-          />
+          {params.isPerRequest ? (
+            <ParamSlider
+              label="Requests / Plan / mo"
+              value={params.reqPerPlan}
+              min={100}
+              max={1000}
+              step={100}
+              format={(v) => v.toLocaleString()}
+              onChange={(v) => update('reqPerPlan', v)}
+            />
+          ) : (
+            <ParamSlider
+              label="Credits / Plan / mo"
+              value={params.modelCredits}
+              min={1}
+              max={100}
+              step={1}
+              format={(v) => `${v}B`}
+              onChange={(v) => update('modelCredits', v)}
+            />
+          )}
+          {!params.isPerRequest && (
+            <ParamSlider
+              label="Ave Credit/Request"
+              value={params.creditsPerReq}
+              min={0.1}
+              max={5}
+              step={0.1}
+              format={(v) => v >= 1 ? `${v}M` : `${(v * 1000).toFixed(0)}k`}
+              onChange={(v) => update('creditsPerReq', v)}
+            />
+          )}
         </CardContent>
       </Card>
     </Box>

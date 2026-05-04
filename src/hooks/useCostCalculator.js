@@ -3,6 +3,8 @@ import { useState, useMemo, useCallback } from 'react'
 const DEFAULTS = {
   modelPlanCost: 100,
   modelCredits: 20,
+  isPerRequest: false,
+  reqPerPlan: 500,
   isSpot: true,
   spotHr: 0.1661,
   multiplier: 2.0,
@@ -25,6 +27,8 @@ export function useCostCalculator() {
     const {
       modelPlanCost,
       modelCredits,
+      isPerRequest,
+      reqPerPlan,
       isSpot,
       spotHr,
       multiplier,
@@ -40,11 +44,18 @@ export function useCostCalculator() {
 
     const totalSessionsMo = users * sessionsPerUser * 20
     const dailySessions = totalSessionsMo / 20
+    const totalRequests = totalSessionsMo * reqPerUser
     const totalCredits = totalSessionsMo * reqPerUser * creditsPerReq * 1e6
     const creditsB = totalCredits / 1e9
 
-    const plansNeeded = Math.ceil(creditsB / modelCredits)
-    const modelCostMo = plansNeeded * modelPlanCost
+    let plansNeeded, modelCostMo
+    if (isPerRequest) {
+      plansNeeded = Math.ceil(totalRequests / reqPerPlan)
+      modelCostMo = plansNeeded * modelPlanCost
+    } else {
+      plansNeeded = Math.ceil(creditsB / modelCredits)
+      modelCostMo = plansNeeded * modelPlanCost
+    }
 
     const workingHoursPerDay = 10
     const nonWorkingHoursPerDay = 14
@@ -59,6 +70,7 @@ export function useCostCalculator() {
 
     return {
       hrRate,
+      totalRequests,
       totalCredits,
       creditsB,
       plansNeeded,

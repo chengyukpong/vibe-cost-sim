@@ -8,7 +8,9 @@ export default function Assumptions({ params, results }) {
     `Non-working hours: 14 hr/day, 30 days/mo → 420 hrs/mo`,
     `Working machines = round(daily sessions / 10 × 1.3 / ${params.instances})`,
     `Non-working machine = 1 (always on)`,
-    `Model cost scales with plan bundles of ${params.modelCredits}B credits each`,
+    params.isPerRequest
+      ? `Model cost scales with plan bundles of ${params.reqPerPlan.toLocaleString()} requests each`
+      : `Model cost scales with plan bundles of ${params.modelCredits}B credits each`,
   ]
 
   return (
