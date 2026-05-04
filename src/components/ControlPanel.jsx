@@ -129,7 +129,7 @@ export default function ControlPanel({ params, update, hrRate }) {
             </Typography>
           </Box>
           <ParamSlider
-            label="Spot Price / hr"
+            label="Price / hr"
             value={params.spotHr}
             min={0.05}
             max={0.5}
