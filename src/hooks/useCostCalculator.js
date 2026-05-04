@@ -1,10 +1,10 @@
 import { useState, useMemo, useCallback } from 'react'
 
 const DEFAULTS = {
-  modelPlanCost: 100,
+  modelPlanCost: 20,
   modelCredits: 20,
   isPerRequest: false,
-  reqPerPlan: 500,
+  reqPerPlan: 300,
   isSpot: true,
   spotHr: 0.1661,
   multiplier: 2.0,
