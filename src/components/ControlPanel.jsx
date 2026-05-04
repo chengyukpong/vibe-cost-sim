@@ -5,6 +5,9 @@ import {
   Typography,
   Slider,
   Switch,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
 } from '@mui/material'
 import SmartToyIcon from '@mui/icons-material/SmartToy'
 import CloudIcon from '@mui/icons-material/Cloud'
@@ -169,23 +172,34 @@ export default function ControlPanel({ params, update, hrRate }) {
               Model Plan
             </Typography>
           </Box>
-          <Box display="flex" alignItems="center" gap={1.25} mb={2}>
-            <Switch
-              checked={params.isPerRequest}
-              onChange={(e) => update('isPerRequest', e.target.checked)}
-              color="primary"
-              size="small"
-            />
-            <Box display="flex" alignItems="center" gap={0.5}>
-              {params.isPerRequest ? (
-                <RequestQuoteIcon sx={{ fontSize: 18, color: 'primary.main' }} />
-              ) : (
-                <TokenIcon sx={{ fontSize: 18, color: 'primary.main' }} />
-              )}
-              <Typography variant="body2" fontWeight={500}>
-                {params.isPerRequest ? 'Per Request' : 'Per Credit'}
-              </Typography>
-            </Box>
+          <Box mb={2}>
+            <RadioGroup
+              row
+              value={params.isPerRequest ? 'perRequest' : 'perCredit'}
+              onChange={(e) => update('isPerRequest', e.target.value === 'perRequest')}
+              sx={{ gap: 1 }}
+            >
+              <FormControlLabel
+                value="perCredit"
+                control={<Radio size="small" color="primary" />}
+                label={
+                  <Box display="flex" alignItems="center" gap={0.5}>
+                    <TokenIcon sx={{ fontSize: 18, color: 'primary.main' }} />
+                    <Typography variant="body2" fontWeight={500}>Per Credit</Typography>
+                  </Box>
+                }
+              />
+              <FormControlLabel
+                value="perRequest"
+                control={<Radio size="small" color="primary" />}
+                label={
+                  <Box display="flex" alignItems="center" gap={0.5}>
+                    <RequestQuoteIcon sx={{ fontSize: 18, color: 'primary.main' }} />
+                    <Typography variant="body2" fontWeight={500}>Per Request</Typography>
+                  </Box>
+                }
+              />
+            </RadioGroup>
           </Box>
           <ParamSlider
             label="Plan Cost / mo"
