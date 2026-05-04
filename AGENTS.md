@@ -40,9 +40,18 @@ src/
 
 ## Deployment
 
-Deploys to GitHub Pages via `gh-pages` branch.
+Deploys to GitHub Pages by committing the `docs/` folder directly on `main`.
 
-- Base path: `/vibe-cost-sim/` (set in `vite.config.js`)
+**Publish workflow:**
+1. `npm run build`
+2. Commit and push (including `docs/`)
+3. GitHub Pages serves from `docs/` (configured in repo Settings → Pages)
+
+**Key config:**
+- `base: './'` in `vite.config.js` — uses relative asset paths so `docs/` works when served from any subfolder
+- `build.outDir: 'docs'` in `vite.config.js` — outputs build to `docs/` instead of `dist/`
+- `.gitignore` must NOT include `docs`
+- `.gitignore` uses `/assets` (root-level only) to ignore stray build artifacts without blocking `docs/assets/`
 
 ## Commands
 
