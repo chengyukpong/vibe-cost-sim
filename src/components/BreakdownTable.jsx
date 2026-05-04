@@ -31,7 +31,7 @@ export default function BreakdownTable({ params, results }) {
     ['Plans Needed', results.plansNeeded],
     ['Working Machines (10h)', `${results.workingMachines}  (${fmtK(results.dailySessions)} / 10 × 1.3 / ${params.instances})`],
     ['Non-Working Machines (14h)', results.nonWorkingMachines],
-    ['Hourly Rate / machine', fmt(results.hrRate)],
+    ['Hourly Rate / machine', `$${results.hrRate.toPrecision(4)}`],
   ]
 
   return (
