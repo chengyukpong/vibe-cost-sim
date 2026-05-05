@@ -51,7 +51,7 @@ function ParamSlider({ label, value, min, max, step, format, onChange, tip }) {
 
 export default function ControlPanel({ params, update, hrRate }) {
   return (
-    <Box sx={{ display: 'flex', gap: 3, alignItems: 'flex-start', flexDirection: { xs: 'column', md: 'row' } }}>
+    <Box sx={{ display: 'flex', gap: 3, alignItems: 'flex-start', flexWrap: 'wrap', flexDirection: { xs: 'column', md: 'row' } }}>
       {/* Usage Pattern */}
       <Card variant="outlined" sx={{ flex: '1 1 0', minWidth: 0 }}>
         <CardContent>

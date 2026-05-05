@@ -35,7 +35,7 @@ export default function App() {
         </Box>
 
         {/* Total + Donut left, Table right */}
-        <Box sx={{ display: 'flex', gap: 3, mt: 3, alignItems: 'flex-start' }}>
+        <Box sx={{ display: 'flex', gap: 3, mt: 3, alignItems: 'flex-start', flexDirection: { xs: 'column', md: 'row' } }}>
           {/* Left: Total widget + Donut stacked */}
           <Box sx={{ flex: '1 1 0', minWidth: 0, display: 'flex', flexDirection: 'column', gap: 3 }}>
             <Card
